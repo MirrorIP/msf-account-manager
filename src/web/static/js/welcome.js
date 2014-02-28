@@ -76,6 +76,7 @@
 		}
 		if (!userEmail || userEmail.length == 0) {
 			$('#noEmailConfirmationPopup').bPopup({opacity: 0.7});
+			$('#noEmailConfirmationButton').unbind();
 			$('#noEmailConfirmationButton').click(function() {
 				$('#noEmailConfirmationPopup').bPopup().close();
 				performRegistration(userId, userPwd, userName, userEmail, isUserNamePublic);
