@@ -5,7 +5,7 @@ The MSF Account Manager is a tool to manage user accounts in the [MIRROR Spaces 
 An documentation how to setup an development environment for Openfire is described [here][3]. A developer guide for Openfire plugins including information how to build it is available [here][4].
 
 ## Installation & Update
-The MSF Account Manager has been tested on Openfire 3.8.2. To install the plugin perform the following steps:
+The MSF Account Manager has been tested on Openfire 3.7 and 3.8. To install the plugin perform the following steps:
 
 1. Open the administration console of Openfire and click on the "Plugins" tab.
 2. In the "Upload Plugin" section of the page, select the persistenceService.jar file and submit it by pressing on the "Upload Plugin" button.
