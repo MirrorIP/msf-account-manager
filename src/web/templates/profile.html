@@ -1,0 +1,102 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+	<title>MSF Account Manager</title>
+	<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+	<link rel="stylesheet" href="manage/static/css/style.css" type="text/css" media="screen"/>
+	<script type="text/javascript" src="manage/static/js/jquery-1.11.0.min.js"></script>
+	<script type="text/javascript" src="manage/static/js/jquery.bpopup.js"></script>
+	<script type="text/javascript" src="manage/static/js/profile.js"></script>
+</head>
+<body>
+	<div id="body">
+		<div id="header">
+			<h1>MSF Account Manager</h1>
+		</div>
+		<div id="mainPanel" class="panel">
+			<div class="panelHeader">
+				User Profile
+			</div>
+			<div class="panelButtonBar">
+				<button id="logoutButton" type="button">Log out</button>
+			</div>
+			<div id="mainTab" class="tab">
+				<ul class="tab">
+					<li><a href="#account" class="current">Account</a></li>
+					<!-- <li><a href="#profile">Profile</a></li> -->
+				</ul>
+				<div id="mainTabAccount">
+					<form name="accountForm" action="manage" method="post">
+					<input type="hidden" name="action" value="update-account">
+					<div class="infoLabel">General account information.</div>
+					<table>
+						<tr>
+							<td><div class="formLabel">User ID</div><input type="text" id="userIdInput" name="userId" disabled="disabled" value="%ACCOUNT_USER_ID%"></td>
+							<td><button type="button" id="changePasswordButton">Change password</button></td>
+						</tr>
+						<tr>
+							<td><div class="formLabel">Full name</div><input type="text" id="userNameInput" name="userName" value="%ACCOUNT_USER_NAME%"></td>
+							<td><input type="checkbox" id="userNamePublicInput" name="isUserNamePublic" %ACCOUNT_IS_USER_NAME_VISIBLE%><label for="isUserNamePublic">Make the name visible to other users.</label></td>
+						</tr>
+						<tr>
+							<td><div class="formLabel">E-mail address</div><input type="text" id="userEmailInput" name="userEmail" value="%ACCOUNT_USER_EMAIL%"></td>
+							<td><button type="button" id="saveAccountButton">Save</button></td>
+						</tr>
+					</table>
+					<div id="emailWarningLabel" class="warnLabel">If no e-mail address is provided, it is not possible to re-activate the account once the password gets lost.</div>
+					</form>
+				</div>
+				<!-- <div id="mainTabProfile">
+					<form name="profileForm" action="manage" method="post">
+					<input type="hidden" name="action" value="update-profile">
+					<div class="infoLabel">The profile is visible to all users of the domain.</div>
+					<table>
+						<tr>
+							<td><div class="formLabel">Full name</div><input type="text" id="profileUserNameInput" name="userName" value="%PROFILE_USER_NAME%"></td>
+						</tr>
+						<tr>
+							<td><div class="formLabel">Organization</div><input type="text" id="profileOrganizationInput" name="orgName" value="%PROFILE_ORGANIZATION%"></td>
+						</tr>
+						<tr>
+							<td><div class="formLabel">Organizational unit</div><input type="text" id="profileOrganizationalUnitInput" name="orgUnit" value="%PROFILE_ORGANIZATIONAL_UNIT%"></td>
+							<td><button type="button" id="saveProfileButton">Save</button></td>
+						</tr>
+					</table>
+					</form>
+				</div> -->
+			</div>
+		</div>
+	</div>
+	<div id="changePasswordPopup" class="popup">
+		<div class="panelHeader">Change Password</div>
+		<div clasS="infoLabel">Please enter your current password and the new password to set.</div>
+		<form name="changePasswordForm" method="post">
+		<input type="hidden" name="action" value="change-password">
+		<table>
+			<tbody>
+				<tr>
+					<td>
+						<div class="formLabel">Old password*</div>
+						<input type="password" id="oldPwdInput" name="oldPwd">
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<div class="formLabel">New password*</div>
+						<input type="password" id="newPwdInput" name="newPwd">
+					</td>
+					<td>
+						<div class="formLabel">New password (repeat)*</div>
+						<input type="password" id="newPwdRepeatInput" name="newPwdRepeat">
+					</td>
+				</tr>
+			</tbody>
+		</table>
+		</form>
+		<div class="buttonRow">
+			<button type="button" id="changePasswordCancelButton">Cancel</button>
+			<button type="button" id="changePasswordSubmitButton">Submit</button>
+		</div>	
+	</div>
+</body>
+</html>

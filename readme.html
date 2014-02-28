@@ -1,0 +1,77 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<html>
+<head>
+	<title>MSF Account Manager - README</title>
+    <style type="text/css">
+        BODY {
+            font-size : 100%;
+        }
+        BODY, TD, TH {
+            font-family : tahoma, verdana, arial, helvetica, sans-serif;
+            font-size : 0.8em;
+        }
+        H2 {
+             font-size : 10pt;
+             font-weight : bold;
+        }
+        A:hover {
+            text-decoration : none;
+        }
+        H1 {
+            font-family : tahoma, arial, helvetica, sans-serif;
+            font-size : 1.4em;
+            font-weight: bold;
+            border-bottom : 1px #ccc solid;
+            padding-bottom : 2px;
+        }
+
+        TT {
+            font-family : courier new;
+            font-weight : bold;
+            color : #060;
+        }
+        PRE {
+            font-family : courier new;
+            font-size : 100%;
+        }
+        
+        SPAN.code {
+        	font-family : courier new;
+        }
+    </style>
+</head>
+<body>
+
+<h1>
+MSF Account Manager - README
+</h1>
+
+<h2>Overview</h2>
+
+<p>
+The MSF Account Manager is a tool to manage user accounts in the MIRROR Spaces Framework.
+</p>
+
+<h2>Installation</h2>
+<p>The MSF Account Manger is available as plugin for the Openfire XMPP server.</p>
+
+<p>To install the plugin perform the following steps:</p>
+<ol>
+	<li>Open the administration console of Openfire and click on the "Plugins" tab.</li>
+	<li>In the "Upload Plugin" section of the page, select the accountmanager.jar file and submit it by pressing on the "Upload Plugin" button.</li>
+</ol>
+
+<h2>Configuration</h2>
+<p>The configuration is integratd in the administration interface of Openfire: "Server" > "Server Settings" > "Account Manager"</p>
+<p>To enable the reset of user account passwords, two prerequisites have to be fulfilled:</p>
+<ul>
+	<li>A sender e-mail address has to be configured in the plugin settings.</li>
+	<li>The SMTP server must be configured within Openfire. The configuration can also be found in the administration console: "Server" > "Server Manager" > "Email Settings"</li>
+</ul>
+
+<h2>Using the Plug-in</h2>
+<p>The plugin provides a user frontend to perform account management actions. It is registered with the sub-path "manage" of the plugin URL, for example 'https://mirror-demo:9091/plugins/msfam/manage'.</p>
+
+</body>
+</html>
