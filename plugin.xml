@@ -2,18 +2,18 @@
 
 <plugin>
     <class>de.imc.mirror.msfam.AccountManagerPlugin</class>
-    <name>MSF Account Manager</name>
+    <name>MSF Account Management Tool</name>
     <description>Account management tool for the MIRROR Spaces Framework.</description>
     <author>Simon Schwantzer</author>
-    <version>1.0.0</version>
-    <date>28/02/2014</date>
+    <version>1.0.1</version>
+    <date>03/10/2014</date>
     <minServerVersion>3.7.0</minServerVersion>
     
     <adminconsole>		
         <tab id="tab-server">
             <sidebar id="sidebar-server-settings">
-                <item id="msfam-settings" name="Account Manager" url="msfam-settings.jsp"
-                     description="Set properties of the MSF Account Manager." />
+                <item id="msfam-settings" name="Account Management" url="msfam-settings.jsp"
+                     description="Set properties of the MSF Account Management Tool." />
             </sidebar>
         </tab>
     </adminconsole>

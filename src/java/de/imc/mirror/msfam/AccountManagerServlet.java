@@ -35,7 +35,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Servlet for the frontend of the MSF Account Manager. 
+ * Servlet for the frontend of the MSF Account Management Tool. 
  * @author simon.schwantzer(at)im-c.de
  */
 public class AccountManagerServlet extends HttpServlet {
@@ -82,7 +82,7 @@ public class AccountManagerServlet extends HttpServlet {
 		}
 	}
 	
-	private static final String errorHTML = "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\"><html><head><title>MSF Account Manager</title><meta http-equiv=\"content-type\" content=\"text/html; charset=UTF-8\"><link rel=\"stylesheet\" href=\"manage/static/css/style.css\" type=\"text/css\" media=\"screen\"/></head><body><div id=\"body\"><div id=\"header\"><h1>MSF Account Manager</h1></div><div id=\"errorMessagePanel\" class=\"panel errorMessage\"><table><colgroup><col width=\"100%\"></colgroup><tr><td id=\"errorMessageLabel\">%MESSAGE%</td></tr></table></div></div></body>";
+	private static final String errorHTML = "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\"><html><head><title>MSF Account Management Tool</title><meta http-equiv=\"content-type\" content=\"text/html; charset=UTF-8\"><link rel=\"stylesheet\" href=\"manage/static/css/style.css\" type=\"text/css\" media=\"screen\"/></head><body><div id=\"body\"><div id=\"header\"><h1>MSF Account Management Tool</h1></div><div id=\"errorMessagePanel\" class=\"panel errorMessage\"><table><colgroup><col width=\"100%\"></colgroup><tr><td id=\"errorMessageLabel\">%MESSAGE%</td></tr></table></div></div></body>";
 	private AccountManagerPlugin amPlugin;
     private PluginManager pluginManager;
     private File pluginPath, staticFilePath, templateFilePath;
@@ -109,7 +109,7 @@ public class AccountManagerServlet extends HttpServlet {
     	}
 
         if (!amPlugin.isServiceEnabled()) {
-        	showError("The Account Manager is currently not available!", null, response);
+        	showError("The Account Management Tool is currently not available!", null, response);
         	return;
         }
         

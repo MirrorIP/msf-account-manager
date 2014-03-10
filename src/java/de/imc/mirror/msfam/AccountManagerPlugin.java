@@ -44,7 +44,7 @@ public class AccountManagerPlugin implements Plugin {
         isServiceEnabled = JiveGlobals.getBooleanProperty("plugin.msfam.enabled", false);
         senderName = JiveGlobals.getProperty("plugin.msfam.senderName");
         senderEmail = JiveGlobals.getProperty("plugin.msfam.senderEmail");
-        log.info("MSF Account Manager loaded. The service is currently " + (isServiceEnabled ? "enabled." : "disabled."));
+        log.info("MSF Account Management Tool loaded. The service is currently " + (isServiceEnabled ? "enabled." : "disabled."));
         this.userManager = XMPPServer.getInstance().getUserManager();
         XMPPServer.getInstance().getVCardManager();
 		this.vCardProvider = VCardManager.getProvider();

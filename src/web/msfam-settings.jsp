@@ -29,7 +29,7 @@
 %>
 <html>
 <head>
-	<title>Account Manager Settings</title>
+	<title>Account Management Settings</title>
 	<meta name="pageID" content="msfam-settings"/>
 </head>
 <body>
@@ -57,7 +57,7 @@
 		<tbody>
 			<tr>
 				<td width="1%" align="center" nowrap><input type="checkbox" name="enableService" <%= isServiceEnabled ? "checked=\"checked\"" : "" %>></td>
-				<td width="99%" align="left">Enable MSF Account Manager.</td>
+				<td width="99%" align="left">Enable MSF Account Management Tool.</td>
 			</tr>
 		</tbody>
 	</table>

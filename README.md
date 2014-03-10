@@ -1,17 +1,17 @@
-# MSF Account Manager
-The MSF Account Manager is a tool to manage user accounts in the [MIRROR Spaces Framework][1]. The service is realized as plug-in for the [Openfire XMPP server][2].
+# MSF Account Management Tool
+The MSF Account Management Tool is a tool to manage user accounts in the [MIRROR Spaces Framework][1]. The service is realized as plug-in for the [Openfire XMPP server][2].
 
 ## Build
 An documentation how to setup an development environment for Openfire is described [here][3]. A developer guide for Openfire plugins including information how to build it is available [here][4].
 
 ## Installation & Update
-The MSF Account Manager has been tested on Openfire 3.8.2. To install the plugin perform the following steps:
+The MSF Account Management Tool has been tested on Openfire 3.8.2. To install the plugin perform the following steps:
 
 1. Open the administration console of Openfire and click on the "Plugins" tab.
 2. In the "Upload Plugin" section of the page, select the persistenceService.jar file and submit it by pressing on the "Upload Plugin" button.
 
 ## Configuration
-The configuration is integratd in the administration interface of Openfire: "Server" > "Server Settings" > "Account Manager"
+The configuration is integratd in the administration interface of Openfire: "Server" > "Server Settings" > "Account Management"
 
 To enable the reset of user account passwords, two prerequisites have to be fulfilled:
 
@@ -25,6 +25,9 @@ The plugin provides a user frontend to perform account management actions. It is
 The MIRROR Spaces Service is released under the [Apache License 2.0][5].
 
 ## Changelog
+
+v1.0.1 -- OPEN
+* Change name.
 
 v1.0.0 -- February 28, 2014
 
