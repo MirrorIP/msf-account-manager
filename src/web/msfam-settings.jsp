@@ -18,11 +18,13 @@
 	boolean isServiceEnabled = amPlugin.isServiceEnabled();
 	String senderName = amPlugin.getSenderName() != null ? amPlugin.getSenderName() : "";
 	String senderEmail = amPlugin.getSenderEmail() != null ? amPlugin.getSenderEmail() : "";
+	String passwordResetMessageBody = amPlugin.getPasswordResetMessageBody();
 	
 	if (save) {
 		amPlugin.setServiceEnabled(ParamUtils.getBooleanParameter(request, "enableService", false));
 		amPlugin.setSenderName(ParamUtils.getParameter(request, "senderName"));
 		amPlugin.setSenderEmail(ParamUtils.getParameter(request, "senderEmail"));
+		amPlugin.setPasswordResetMessageBody(ParamUtils.getParameter(request, "passwordResetMessageBody"));
 		response.sendRedirect("msfam-settings.jsp?saved=true");
 	}
 	
@@ -73,6 +75,12 @@
 			<tr>
 				<td style="text-align: right;">E-mail address of the sender:</td>
 				<td><input style="width: 400px;" type="text" name="senderEmail" value="<%= StringUtils.escapeHTMLTags(senderEmail) %>"></td>
+			</tr>
+			<tr>
+				<td style="text-align: right;">Password reset message body:<br>(%PASSWORD% will be replaced with the new password)</td>
+				<td>
+					<textarea style="width: 400px;" name="passwordResetMessageBody" rows="5"><%= StringUtils.escapeHTMLTags(passwordResetMessageBody) %></textarea>
+				</td>
 			</tr>
 		</tbody>
 	</table>

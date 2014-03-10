@@ -30,7 +30,12 @@ The MIRROR Spaces Service is released under the [Apache License 2.0][5].
 
 ## Changelog
 
+v1.1.0-SNAPSHOT
+
+* The password reset message can now be edited.
+
 v1.0.1 -- OPEN
+
 * Change name.
 
 v1.0.0 -- February 28, 2014

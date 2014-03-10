@@ -38,12 +38,14 @@ public class AccountManagerPlugin implements Plugin {
     private VCardProvider vCardProvider;
     private String senderName;
     private String senderEmail;
+    private String passwordResetMessageBody;
 
     @Override
     public void initializePlugin(PluginManager manager, File pluginDirectory) {
         isServiceEnabled = JiveGlobals.getBooleanProperty("plugin.msfam.enabled", false);
         senderName = JiveGlobals.getProperty("plugin.msfam.senderName");
         senderEmail = JiveGlobals.getProperty("plugin.msfam.senderEmail");
+        passwordResetMessageBody = JiveGlobals.getProperty("plugin.msfam.passwordResetMessageBody", "<p>Your new password is: %PASSWORD%</p>");
         log.info("MSF Account Management Tool loaded. The service is currently " + (isServiceEnabled ? "enabled." : "disabled."));
         this.userManager = XMPPServer.getInstance().getUserManager();
         XMPPServer.getInstance().getVCardManager();
@@ -103,6 +105,23 @@ public class AccountManagerPlugin implements Plugin {
     }
     
     /**
+     * Returns the body of the password reset message.     
+     * @return Message body as HTML string.
+     */
+    public String getPasswordResetMessageBody() {
+		return passwordResetMessageBody;
+	}
+
+    /**
+     * Sets the body for the password reset message. 
+     * @param passwordResetMessageBody HTML string to use as message body. 
+     */
+	public void setPasswordResetMessageBody(String passwordResetMessageBody) {
+		this.passwordResetMessageBody = passwordResetMessageBody;
+		JiveGlobals.setProperty("plugin.msfam.passwordResetMessageBody",  passwordResetMessageBody);
+	}
+
+	/**
      * Returns the sender for e-mails send out.
      * @return E-mail address as string. May be <code>null</code> or empty.
      */
@@ -212,14 +231,12 @@ public class AccountManagerPlugin implements Plugin {
     }
     
     /**
-     * Generates a message body.
+     * Generates the final message body. 
      * @param newPassword
      * @return HTML body for the password reset e-mail.
      */
     private String generateMessageBody(String newPassword) {
-    	StringBuilder builder = new StringBuilder(1000);
-    	builder.append("<p>Your new password is: ").append(newPassword).append("</p>");
-    	return builder.toString();
+    	return passwordResetMessageBody.replaceAll("%PASSWORD%", newPassword);
     }
     
     /**
