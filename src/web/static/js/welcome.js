@@ -1,8 +1,23 @@
 (function ($) {
+	var referrer = null;
+	
 	$(document).ready(
 		function () {
 			initializeInputHandlers();
-			setTab('welcomeTab', 'login');
+			referrer = getURLParameter('ref');
+			switch (location.hash.split('?')[0]) {
+			case '#login':
+				setTab('welcomeTab', 'login');
+				break;
+			case '#register':
+				setTab('welcomeTab', 'register');
+				break;
+			case '#services':
+				setTab('welcomeTab', 'services');
+				break;
+			default:
+				setTab('welcomeTab', 'login');
+			}
 		}
 	);
 
@@ -42,6 +57,10 @@
 		if (!regex.test(String.fromCharCode(e.which))) {
 	    	e.preventDefault();
 	    }
+	}
+	
+	function getURLParameter(name) {
+		return decodeURIComponent((new RegExp('[?|&]' + name + '=' + '([^&;]+?)(&|#|;|$)').exec(location.search)||[,""])[1].replace(/\+/g, '%20')) || null;
 	}
 	
 	function setTab(id, tabRef) {
@@ -104,7 +123,7 @@
 				actions.push({
 					label: 'Continue',
 					onclick: function() {
-						window.location.href = 'manage';
+						window.location.href = referrer ? referrer : 'manage';
 					}
 				});
 				showMessagePopup('The account was registered successfully.', 'info', actions);

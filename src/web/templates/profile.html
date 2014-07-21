@@ -18,7 +18,7 @@
 				User Profile
 			</div>
 			<div class="panelButtonBar">
-				<button id="logoutButton" type="button">Log out</button>
+				<button id="logoutButton" type="button">${spaces.msfam.logout}</button>
 			</div>
 			<div id="mainTab" class="tab">
 				<ul class="tab">
@@ -28,22 +28,22 @@
 				<div id="mainTabAccount">
 					<form name="accountForm" action="manage" method="post">
 					<input type="hidden" name="action" value="update-account">
-					<div class="infoLabel">General account information.</div>
+					<div class="infoLabel">${spaces.msfam.account.info}</div>
 					<table>
 						<tr>
-							<td><div class="formLabel">User ID</div><input type="text" id="userIdInput" name="userId" disabled="disabled" value="%ACCOUNT_USER_ID%"></td>
-							<td><button type="button" id="changePasswordButton">Change password</button></td>
+							<td><div class="formLabel">${spaces.msfam.userid}</div><input type="text" id="userIdInput" name="userId" disabled="disabled" value="%ACCOUNT_USER_ID%"></td>
+							<td><button type="button" id="changePasswordButton">${spaces.msfam.password.change}</button></td>
 						</tr>
 						<tr>
-							<td><div class="formLabel">Full name</div><input type="text" id="userNameInput" name="userName" value="%ACCOUNT_USER_NAME%"></td>
-							<td><input type="checkbox" id="userNamePublicInput" name="isUserNamePublic" %ACCOUNT_IS_USER_NAME_VISIBLE%><label for="isUserNamePublic">Make the name visible to other users.</label></td>
+							<td><div class="formLabel">${spaces.msfam.fullname}</div><input type="text" id="userNameInput" name="userName" value="%ACCOUNT_USER_NAME%"></td>
+							<td><input type="checkbox" id="userNamePublicInput" name="isUserNamePublic" %ACCOUNT_IS_USER_NAME_VISIBLE%><label for="isUserNamePublic">${spaces.msfam.register.namevisible}</label></td>
 						</tr>
 						<tr>
-							<td><div class="formLabel">E-mail address</div><input type="text" id="userEmailInput" name="userEmail" value="%ACCOUNT_USER_EMAIL%"></td>
-							<td><button type="button" id="saveAccountButton">Save</button></td>
+							<td><div class="formLabel">${spaces.msfam.emailaddress}</div><input type="text" id="userEmailInput" name="userEmail" value="%ACCOUNT_USER_EMAIL%"></td>
+							<td><button type="button" id="saveAccountButton">${spaces.msfam.save}</button></td>
 						</tr>
 					</table>
-					<div id="emailWarningLabel" class="warnLabel">If no e-mail address is provided, it is not possible to re-activate the account once the password gets lost.</div>
+					<div id="emailWarningLabel" class="warnLabel">${spaces.msfam.warn.noemail}</div>
 					</form>
 				</div>
 				<!-- <div id="mainTabProfile">
@@ -94,8 +94,8 @@
 		</table>
 		</form>
 		<div class="buttonRow">
-			<button type="button" id="changePasswordCancelButton">Cancel</button>
-			<button type="button" id="changePasswordSubmitButton">Submit</button>
+			<button type="button" id="changePasswordCancelButton">${spaces.msfam.cancel}</button>
+			<button type="button" id="changePasswordSubmitButton">${spaces.msfam.save}</button>
 		</div>	
 	</div>
 </body>

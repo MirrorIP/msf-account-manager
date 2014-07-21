@@ -16,55 +16,55 @@
 		<div id="mainPanel" class="panel">
 			<div id="welcomeTab" class="tab">
 				<ul class="tab">
-					<li><a href="#login" class="current">Login</a></li>
-					<li><a href="#register">Register</a></li>
-					<li><a href="#services">Password Reset</a></li>
+					<li><a href="#login" class="current">${spaces.msfam.login}</a></li>
+					<li><a href="#register">${spaces.msfam.register}</a></li>
+					<li><a href="#services">${spaces.msfam.services}</a></li>
 				</ul>
 				<div id="welcomeTabLogin">
 					<form name="loginForm" method="post" action="manage">
 					<input type="hidden" name="action" value="login">
-					<div class="infoLabel">Manage your user profile.</div>
+					<div class="infoLabel">${spaces.msfam.login.info}</div>
 					<table>
 						<tr>
-							<td><div class="formLabel">User ID</div><input type="text" id="userIdInput" name="userIdInput"/></td>
+							<td><div class="formLabel">${spaces.msfam.userid}</div><input type="text" id="userIdInput" name="userIdInput"/></td>
 						</tr>
 						<tr>
-							<td><div class="formLabel">Password</div><input type="password" id="userPwdInput" name="userPwdInput"/></td>
-							<td><button type="button" id="loginButton">Login</button></td>
+							<td><div class="formLabel">${spaces.msfam.password}</div><input type="password" id="userPwdInput" name="userPwdInput"/></td>
+							<td><button type="button" id="loginButton">${spaces.msfam.login}</button></td>
 						</tr>
 					</table>
 					</form>
 				</div>
 				<div id="welcomeTabRegister">
-					<div class="infoLabel">Create a new account for the MIRROR Spaces Framework. A valid e-mail address is required if you want to be able to reset your password.</div>
+					<div class="infoLabel">${spaces.msfam.register.info}</div>
 					<table>
 						<tr>
-							<td><div class="formLabel">User ID*</div><input type="text" id="newUserIdInput"></td>
+							<td><div class="formLabel">${spaces.msfam.userid}*</div><input type="text" id="newUserIdInput"></td>
 						</tr>
 						<tr>
-							<td><div class="formLabel">Password*</div><input type="password" id="newUserPwdInput"></td>
-							<td><div class="formLabel">Password (repeat)*</div><input type="password" id="newUserPwdRepeatInput"></td>
+							<td><div class="formLabel">${spaces.msfam.password}*</div><input type="password" id="newUserPwdInput"></td>
+							<td><div class="formLabel">${spaces.msfam.passwordrepeat}*</div><input type="password" id="newUserPwdRepeatInput"></td>
 						</tr>
 						<tr>
-							<td><div class="formLabel">Full name</div><input type="text" id="newFullNameInput"></td>
-							<td><input type="checkbox" id="newFullNamePublic" checked="checked" name="isUserNamePublic"><label for="isUserNamePublic">Make the name visible to other users.</label></td>
+							<td><div class="formLabel">${spaces.msfam.fullname}</div><input type="text" id="newFullNameInput"></td>
+							<td><input type="checkbox" id="newFullNamePublic" checked="checked" name="isUserNamePublic"><label for="isUserNamePublic">${spaces.msfam.register.namevisible}</label></td>
 						</tr>
 						<tr>
-							<td><div class="formLabel">E-mail address</div><input type="text" id="newEmailInput"></td>
-							<td><button type="button" id="registerButton">Register</button></td>
+							<td><div class="formLabel">${spaces.msfam.emailaddress}</div><input type="text" id="newEmailInput"></td>
+							<td><button type="button" id="registerButton">${spaces.msfam.register}</button></td>
 						</tr>
 					</table>
-					<p>* required</p>
+					<p>* ${spaces.msfam.required}</p>
 				</div>
 				<div id="welcomeTabServices">
-					<div class="infoLabel">Requests a new password for a user account. The new password is sent to the e-mail address which is mapped to the account.</div>
+					<div class="infoLabel">${spaces.msfam.services.info}</div>
 					<table>
 						<tr>
-							<td><div class="formLabel">User ID*</div><input type="text" id="resetUserIdInput" /></td>
-							<td><button type="button" id="resetAccountButton">Request reset</button></td>
+							<td><div class="formLabel">${spaces.msfam.userid}*</div><input type="text" id="resetUserIdInput" /></td>
+							<td><button type="button" id="resetAccountButton">${spaces.msfam.services.requestreset}</button></td>
 						</tr>
 					</table> 
-					<p>* required</p>
+					<p>* ${spaces.msfam.required}</p>
 				</div>
 			</div>
 		</div>
@@ -73,22 +73,22 @@
 		<div class="panelHeader">Password Reset</div>
 		<div id="requestResetResponse"></div>
 		<div class="buttonRow">
-			<button type="button" id="requestResetPopupClose">Close</button>
+			<button type="button" id="requestResetPopupClose">${spaces.msfam.close}</button>
 		</div>	
 	</div>
 	<div id="messagePopup" class="popup">
 		<div id="messagePopupMessage"></div>
 		<div class="buttonRow" id="messagePopupButtons">
-			<button type="button" id="messagePopupClose">Close</button>
+			<button type="button" id="messagePopupClose">${spaces.msfam.close}</button>
 		</div>
 	</div>
 	<div id="noEmailConfirmationPopup" class="popup">
-		<div class="panelHeader">Warning!</div>
-		<div class="warnLabel">If no e-mail address is provided, it is not possible to re-activate the account once the password gets lost.</div>
+		<div class="panelHeader">${spaces.msfam.warning}!</div>
+		<div class="warnLabel">${spaces.msfam.warn.noemail}</div>
 		<div class="buttonRow">
-			<button type="button" id="noEmailCancelButton">Cancel</button>
-			<button type="button" id="noEmailConfirmationButton">Confirm</button>
+			<button type="button" id="noEmailCancelButton">${spaces.msfam.cancel}</button>
+			<button type="button" id="noEmailConfirmationButton">${spaces.msfam.confirm}</button>
 		</div>
-	</div>
+	</div>	
 </body>
 </html>

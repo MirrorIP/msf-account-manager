@@ -5,8 +5,12 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.activation.MimetypesFileTypeMap;
 import javax.servlet.ServletConfig;
@@ -30,6 +34,7 @@ import org.jivesoftware.openfire.container.PluginManager;
 import org.jivesoftware.openfire.user.User;
 import org.jivesoftware.openfire.user.UserAlreadyExistsException;
 import org.jivesoftware.openfire.user.UserNotFoundException;
+import org.jivesoftware.util.LocaleUtils;
 import org.jivesoftware.util.XMLWriter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -41,6 +46,7 @@ import org.slf4j.LoggerFactory;
 public class AccountManagerServlet extends HttpServlet {
 	private static final Logger log = LoggerFactory.getLogger(AccountManagerServlet.class);
 	private static final long serialVersionUID = 1L;
+	private static final Pattern I18N_PATTERN = Pattern.compile("\\$\\{(.*?)\\}");
 	
 	/**
 	 * Enumeration for user actions.
@@ -103,29 +109,31 @@ public class AccountManagerServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    	String localeString = request.getParameter("locale");
+    	Locale locale = localeString != null ? LocaleUtils.localeCodeToLocale(localeString) : Locale.ENGLISH;
     	if (request.getPathInfo().startsWith("/msfam/manage/static/")) {
     		handleStaticRequest(request, response);
     		return;
     	}
 
         if (!amPlugin.isServiceEnabled()) {
-        	showError("The Account Management Tool is currently not available!", null, response);
+        	showError("The Account Management Tool is currently not available!", null, response, locale);
         	return;
         }
         
     	Action action = Action.getAction(request.getParameter("action"));
     	switch (action) {
     	case LOGIN:
-            handleLoginAction(request, response);
+            handleLoginAction(request, response, locale);
     		break;
     	case LOGOUT:
-    		handleLogoutAction(request, response);
+    		handleLogoutAction(request, response, locale);
     		break;
     	case UPDATE_ACCOUNT:
-    		handleUpdateAccountAction(request, response);
+    		handleUpdateAccountAction(request, response, locale);
     		break;
     	case CHANGE_PASSWORD:
-    		handlePasswordChangeAction(request, response);
+    		handlePasswordChangeAction(request, response, locale);
     		break;
     	case RESET_PASSWORD:
     		handlePasswordResetAction(request, response);
@@ -137,9 +145,9 @@ public class AccountManagerServlet extends HttpServlet {
     		// No action to perform.
             AuthToken authToken = (AuthToken) request.getSession().getAttribute("authToken");
     		if (authToken != null) {
-    			showProfilePage(authToken, request, response);
+    			showProfilePage(authToken, request, response, locale);
     		} else {
-    			readHTMLFile("welcome.html", null, response);
+    			readHTMLFile("welcome.html", null, response, locale);
     		}
     	}
     }
@@ -147,7 +155,7 @@ public class AccountManagerServlet extends HttpServlet {
     /**
      * Tries to authenticate a login request. If successful, a authentication token is added to the session.
      */
-    private void handleLoginAction(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    private void handleLoginAction(HttpServletRequest request, HttpServletResponse response, Locale locale) throws IOException {
     	String userId = request.getParameter("userIdInput");
     	String userPwd = request.getParameter("userPwdInput");
     	    	
@@ -155,33 +163,33 @@ public class AccountManagerServlet extends HttpServlet {
     	try {
 			token = AuthFactory.authenticate(userId, userPwd);
 			request.getSession().setAttribute("authToken", token);
-			showProfilePage(token, request, response);
+			showProfilePage(token, request, response, locale);
 		} catch (UnauthorizedException e) {
-			showError("Failed to log in.", "manage", response);
+			showError("Failed to log in.", "manage", response, locale);
 		} catch (ConnectionException e) {
 			log.warn("Connection exception during authentication: " + e.getMessage());
-			showError("Internal error.", "manage", response);
+			showError("Internal error.", "manage", response, locale);
 		} catch (InternalUnauthenticatedException e) {
 			log.warn("An internal authentication exception occured: " + e.getMessage());
-			showError("Internal error.", "manage", response);
+			showError("Internal error.", "manage", response, locale);
 		}
     }
     
     /**
      * Deletes the token from the session and loads the welcome page.
      */
-    private void handleLogoutAction(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    private void handleLogoutAction(HttpServletRequest request, HttpServletResponse response, Locale locale) throws IOException {
     	request.getSession().removeAttribute("authToken");
-    	readHTMLFile("welcome.html", null, response);
+    	readHTMLFile("welcome.html", null, response, locale);
     }
     
     /**
      * Handles a request to change the user password. Returns profile page if successful, otherwise an error page.
      */
-    private void handlePasswordChangeAction(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    private void handlePasswordChangeAction(HttpServletRequest request, HttpServletResponse response, Locale locale) throws IOException {
     	AuthToken token = (AuthToken) request.getSession().getAttribute("authToken");
     	if (token == null) {
-    		showError("Session is invalid.", "manage", response);
+    		showError("Session is invalid.", "manage", response, locale);
     		return;
     	}
     	String oldPwd = request.getParameter("oldPwd");
@@ -191,13 +199,13 @@ public class AccountManagerServlet extends HttpServlet {
 			user = amPlugin.getUser(token);
 	    	if (oldPwd.equals(AuthFactory.getPassword(user.getUsername()))) {
 	    		user.setPassword(newPwd);
-	    		showProfilePage(token, request, response);
+	    		showProfilePage(token, request, response, locale);
 	    	} else {
-	    		showError("The password could not be verified.", "manage", response);
+	    		showError("The password could not be verified.", "manage", response, locale);
 	    		return;
 	    	}
 		} catch (UserNotFoundException e) {
-			showError("Account error.", "manage", response);
+			showError("Account error.", "manage", response, locale);
 			return;
 		}
     }
@@ -205,10 +213,10 @@ public class AccountManagerServlet extends HttpServlet {
     /**
      * Handles an account update. Returns profile page if successful, otherwise an error page. 
      */
-    private void handleUpdateAccountAction(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    private void handleUpdateAccountAction(HttpServletRequest request, HttpServletResponse response, Locale locale) throws IOException {
     	AuthToken token = (AuthToken) request.getSession().getAttribute("authToken");
     	if (token == null) {
-    		showError("Session is invalid.", "manage", response);
+    		showError("Session is invalid.", "manage", response, locale);
     		return;
     	}
 		String userEmail = request.getParameter("userEmail");
@@ -249,10 +257,10 @@ public class AccountManagerServlet extends HttpServlet {
 			}
 			amPlugin.setVCard(token, vCardElement);
 			
-	    	showProfilePage(token, request, response);
+	    	showProfilePage(token, request, response, locale);
 		} catch (UserNotFoundException e) {
 			log.warn("Authorized user was not found: " + e.getMessage());
-			showError("Session is invalid.", "manage", response);
+			showError("Session is invalid.", "manage", response, locale);
 			e.printStackTrace();
 		}
     }
@@ -342,7 +350,7 @@ public class AccountManagerServlet extends HttpServlet {
      * Shows the profile page of the authenticated user.
      * @param token Authentication token provided with the request.
      */
-    private void showProfilePage(AuthToken token, HttpServletRequest request, HttpServletResponse response) throws IOException {
+    private void showProfilePage(AuthToken token, HttpServletRequest request, HttpServletResponse response, Locale locale) throws IOException {
     	Map<String, String> fieldValues = new HashMap<String, String>();
     	try {
 			User user = amPlugin.getUser(token);
@@ -358,10 +366,10 @@ public class AccountManagerServlet extends HttpServlet {
 				}
 			}
 			
-			readHTMLFile("profile.html", fieldValues, response);
+			readHTMLFile("profile.html", fieldValues, response, locale);
 		} catch (UserNotFoundException e) {
 			request.getSession().removeAttribute("authToken");
-			showError("Session is invalid.", "manage", response);
+			showError("Session is invalid.", "manage", response, locale);
 		}
     }
     
@@ -370,11 +378,11 @@ public class AccountManagerServlet extends HttpServlet {
      * @param error Error message to show.
      * @param returnUrl URL to call one the error message is dismissed.
      */
-    private void showError(String error, String returnUrl, HttpServletResponse response) throws IOException {
+    private void showError(String error, String returnUrl, HttpServletResponse response, Locale locale) throws IOException {
     	Map<String, String> fieldValues = new HashMap<String, String>();
     	fieldValues.put("MESSAGE", error);
     	fieldValues.put("URL", returnUrl != null ? returnUrl : "");
-    	readHTMLFile("error.html", fieldValues, response);
+    	readHTMLFile("error.html", fieldValues, response, locale);
     }
     
     /**
@@ -460,8 +468,9 @@ public class AccountManagerServlet extends HttpServlet {
 	 * @param fileName File name of the template to read. 
 	 * @param fieldValues Map of values to replace. 
 	 * @param response Servlet response to write result to.
+	 * @param Locale to apply i18n bundle. May be <code>null</code>.
 	 */
-	private void readHTMLFile(String fileName, Map<String, String> fieldValues, HttpServletResponse response) throws IOException {
+	private void readHTMLFile(String fileName, Map<String, String> fieldValues, HttpServletResponse response, Locale locale) throws IOException {
 		String s;
 		try {
 			FileReader fileReader = new FileReader(new File(templateFilePath, fileName));
@@ -477,6 +486,18 @@ public class AccountManagerServlet extends HttpServlet {
 				for (String field : fieldValues.keySet()) {
 					s = s.replaceAll("%" + field + "%", fieldValues.get(field));
 				}
+			}
+			Matcher m = I18N_PATTERN.matcher(s);
+			Map<String, String> localizedStrings = new HashMap<String, String>();
+			while (m.find()) {
+				String key = m.group(1);
+				String localizedString = (locale != null) ? LocaleUtils.getLocalizedString(key, "msfam", Collections.EMPTY_LIST, locale, false) : LocaleUtils.getLocalizedString(key, "msfam");
+				if (localizedString != null) {
+					localizedStrings.put(key, localizedString);
+				}
+			}
+			for (String key : localizedStrings.keySet()) {
+				s = s.replaceAll(Pattern.quote("${" + key + "}"), localizedStrings.get(key));
 			}
 		} catch (Exception e) {
 			log.warn("Failed to read HTML template: " + e.getMessage());
