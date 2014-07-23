@@ -23,6 +23,7 @@
 				<div id="welcomeTabLogin">
 					<form name="loginForm" method="post" action="manage">
 					<input type="hidden" name="action" value="login">
+					<!-- input type="hidden" name="locale" value="en"-->
 					<div class="infoLabel">${spaces.msfam.login.info}</div>
 					<table>
 						<tr>
@@ -89,6 +90,42 @@
 			<button type="button" id="noEmailCancelButton">${spaces.msfam.cancel}</button>
 			<button type="button" id="noEmailConfirmationButton">${spaces.msfam.confirm}</button>
 		</div>
-	</div>	
+	</div>
+	<div id="warnInvalidUserIdPopup" class="popup">
+		<div class="warnLabel">${spaces.msfam.warn.idminchar}</div>
+		<div class="buttonRow">
+			<button type="button">${spaces.msfam.close}</button>
+		</div>
+	</div>
+	<div id="warnNoPasswordPopup" class="popup">
+		<div class="warnLabel">${spaces.msfam.warn.nopassword}</div>
+		<div class="buttonRow">
+			<button type="button">${spaces.msfam.close}</button>
+		</div>
+	</div>
+	<div id="warnPasswordsNotEqualPopup" class="popup">
+		<div class="warnLabel">${spaces.msfam.warn.passwordsnotequal}</div>
+		<div class="buttonRow">
+			<button type="button">${spaces.msfam.close}</button>
+		</div>
+	</div>
+	<div id="infoRegistrationSuccessfulPopup" class="popup">
+		<div class="infoLabel">${spaces.msfam.info.registrationsuccess}</div>
+		<div class="buttonRow">
+			<button type="button">${spaces.msfam.continue}</button>
+		</div>
+	</div>
+	<div id="warnMissingUserIdPopup" class="popup">
+		<div class="infoLabel">${spaces.msfam.warn.missinguserid}</div>
+		<div class="buttonRow">
+			<button type="button">${spaces.msfam.close}</button>
+		</div>
+	</div>
+	<div id="passwortResetFailedPopup" class="popup">
+		<div class="warnLabel">${spaces.msfam.warn.missinguserid}</div>
+		<div class="buttonRow">
+			<button type="button">${spaces.msfam.close}</button>
+		</div>
+	</div>
 </body>
 </html>

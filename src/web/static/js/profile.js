@@ -7,6 +7,10 @@
 		}
 	);
 	
+	function getURLParameter(name) {
+		return decodeURIComponent((new RegExp('[?|&]' + name + '=' + '([^&;]+?)(&|#|;|$)').exec(location.search)||[,""])[1].replace(/\+/g, '%20')) || null;
+	}
+
 	function displayEmailWarning() {
 		if ($('#userEmailInput').val()) {
 			$('#emailWarningLabel').hide();
@@ -42,9 +46,12 @@
 			if (oldPassword && oldPassword.length > 0 && newPassword && newPassword.length > 0 && newPassword == repeatedPassword) {
 				changePassword();
 			} else {
-				alert('Failed to update the password. Validate your input.');
+				$('#invalidPasswordInputPopup').bPopup({opacity: 0.7});
 			}
 			$('#changePasswordPopup').bPopup().close();
+		});
+		$('#invalidPasswordInputPopup button').click(function() {
+			$('#invalidPasswordInputPopup').bPopup().close();
 		});
 	}
 	
@@ -65,6 +72,9 @@
 	}
 	
 	function logout(event) {
-		window.location.href = 'manage?action=logout';
+		var managePath = 'manage?action=logout';
+		var locale = getURLParameter('locale');
+		if (locale) managePath += '&locale=' + locale;
+		window.location.href = managePath;
 	}
 }(jQuery));

@@ -136,7 +136,7 @@ public class AccountManagerServlet extends HttpServlet {
     		handlePasswordChangeAction(request, response, locale);
     		break;
     	case RESET_PASSWORD:
-    		handlePasswordResetAction(request, response);
+    		handlePasswordResetAction(request, response, locale);
     		break;
     	case REGISTER_ACCOUNT:
     		handleAccountRegistrationAction(request, response);
@@ -323,21 +323,21 @@ public class AccountManagerServlet extends HttpServlet {
     /**
      * Handles a passwort reset action. It is implemented as AJAX call and returns the HTML to display.
      */
-    private void handlePasswordResetAction(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    private void handlePasswordResetAction(HttpServletRequest request, HttpServletResponse response, Locale locale) throws IOException {
     	String userId = request.getParameter("userId");
     	String responseHtml;
     	if (userId == null || userId.trim().isEmpty()) {
-    		responseHtml = "<div class=\"warnLabel\">A user id is required in order to reset the password.</div>";
+    		responseHtml = "<div class=\"warnLabel\">" + LocaleUtils.getLocalizedString("spaces.msfam.warn.missinguserid", "msfam", Collections.EMPTY_LIST, locale, false) + "</div>";
     	} else try {
 			User user = amPlugin.getUser(userId);
 			amPlugin.resetAndSendPassword(user);
-			responseHtml = "<div class=\"infoLabel\">An e-mail containing a new password has been sent to the given e-mail address.</div>";
+			responseHtml = "<div class=\"infoLabel\">" + LocaleUtils.getLocalizedString("spaces.msfam.info.passwordsent", "msfam", Collections.EMPTY_LIST, locale, false) + "</div>";
 		} catch (UserNotFoundException e) {
-			responseHtml = "<div class=\"warnLabel\">Invalid user ID.</div>";
+			responseHtml = "<div class=\"warnLabel\">" + LocaleUtils.getLocalizedString("spaces.msfam.error.invaliduserid", "msfam", Collections.EMPTY_LIST, locale, false) + "</div>";
 		} catch (ConfigurationException e) {
-			responseHtml = "<div class=\"warnLabel\">A passwort reset is currently not possible.</div>";
+			responseHtml = "<div class=\"warnLabel\">" + LocaleUtils.getLocalizedString("spaces.msfam.error.configerror", "msfam", Collections.EMPTY_LIST, locale, false) + "</div>";
 		} catch (NoRecipientException e) {
-			responseHtml = "<div class=\"warnLabel\">No e-mail address available for the given account. The request cannot be processed.</div>";
+			responseHtml = "<div class=\"warnLabel\">" + LocaleUtils.getLocalizedString("spaces.msfam.error.nomail", "msfam", Collections.EMPTY_LIST, locale, false) + "</div>";
 		}
     	
     	PrintWriter writer = response.getWriter();

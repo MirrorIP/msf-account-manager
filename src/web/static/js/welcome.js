@@ -3,8 +3,8 @@
 	
 	$(document).ready(
 		function () {
-			initializeInputHandlers();
 			referrer = getURLParameter('ref');
+			initializeInputHandlers();
 			switch (location.hash.split('?')[0]) {
 			case '#login':
 				setTab('welcomeTab', 'login');
@@ -36,6 +36,26 @@
 		
 		$('#noEmailCancelButton').click(function() {
 			$('#noEmailConfirmationPopup').bPopup().close();
+		});
+		
+		$('#warnInvalidUserIdPopup button').click(function() {
+			$('#warnInvalidUserIdPopup').bPopup().close();
+		})
+		
+		$('#warnNoPasswordPopup button').click(function() {
+			$('#warnNoPasswordPopup').bPopup().close();
+		});
+		
+		$('#warnPasswordsNotEqualPopup button').click(function() {
+			$('#warnPasswordsNotEqualPopup').bPopup().close();
+		});
+		
+		$('#infoRegistrationSuccessfulPopup button').click(function() {
+			window.location.href = referrer ? referrer : 'manage';
+		});
+		
+		$('#warnMissingUserIdPopup button').click(function() {
+			$('#warnMissingUserIdPopup').bPopup().close();
 		});
 		
 		$('#newUserIdInput').keypress(function(e) {
@@ -72,6 +92,11 @@
 	}
 	
 	function loginUser(event) {
+		var locale = getURLParameter('locale');
+		if (locale) {
+			// $('input[name="locale"]').val(locale);
+			$('form[name="loginForm"]').attr('action', 'manage?locale=' + locale);
+		}
 		document.forms.loginForm.submit();
 	}
 	
@@ -83,14 +108,14 @@
 		var userName = $('#newFullNameInput').val();
 		var isUserNamePublic = $('#newFullNamePublic').is(':checked');
 		if (!userId || userId.length < 5) {
-			showMessagePopup('The user ID must contain at least five characters.', 'warn');
+			$('#warnInvalidUserIdPopup').bPopup({opacity: 0.7});
 			return;
 		}
 		if (!userPwd || userPwd.length == 0) {
-			showMessagePopup('Please enter a password.');
+			$('#warnNoPasswordPopup').bPopup({opacity: 0.7});
 			return;
 		} else if (userPwd != userPwdRepeat) {
-			showMessagePopup('The passwords are not equal.');
+			$('#warnPasswordsNotEqualPopup').bPopup({opacity: 0.7});
 			return;
 		}
 		if (!userEmail || userEmail.length == 0) {
@@ -119,14 +144,7 @@
 				showMessagePopup('Failed to request server.', 'warn');
 			} else switch (resultElement.getAttribute('type')) {
 			case 'result':
-				var actions = [];
-				actions.push({
-					label: 'Continue',
-					onclick: function() {
-						window.location.href = referrer ? referrer : 'manage';
-					}
-				});
-				showMessagePopup('The account was registered successfully.', 'info', actions);
+				$('#infoRegistrationSuccessfulPopup').bPopup({opacity: 0.7});
 				break;
 			case 'error':
 				showMessagePopup(resultElement.textContent, 'warn');
@@ -172,19 +190,21 @@
 	function resetUserAccount(event) {
 		var userId = $('#resetUserIdInput').val();
 		if (userId && userId.length > 0) {
-			$.post('manage', {action: 'reset-password', userId: userId}, function(data, status) {
-				var response = $('<div>Request failed</div>');
+			var params = {action: 'reset-password', userId: userId};
+			var locale = getURLParameter('locale'); 
+			if (locale) {
+				params.locale = locale;
+			}
+			$.post('manage', params, function(data, status) {
 				if (status == 'success') {
-					response.html(data);
+					$('#requestResetResponse').html(data);
+				} else {
+					$('#requestResetResponse').html('<div class="warnLabel">REQUEST ERROR</div>');
 				}
-				$('#requestResetResponse').html(response);
 				$('#requestResetPopup').bPopup({opacity: 0.7});
 			}, 'html');
 		} else {
-			var errorResponse = $('<div>Please enter the user ID to request a new password for.</div>');
-			errorResponse.addClass('warnLabel');
-			$('#requestResetResponse').html(errorResponse);
-			$('#requestResetPopup').bPopup({opacity: 0.7});
+			$('#warnMissingUserIdPopup').bPopup({opacity: 0.7});
 		}
 	}
 }(jQuery));

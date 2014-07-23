@@ -14,15 +14,13 @@
 			<h1>MSF Account Management Tool</h1>
 		</div>
 		<div id="mainPanel" class="panel">
-			<div class="panelHeader">
-				User Profile
-			</div>
+			<div class="panelHeader">${spaces.msfam.userprofile}</div>
 			<div class="panelButtonBar">
 				<button id="logoutButton" type="button">${spaces.msfam.logout}</button>
 			</div>
 			<div id="mainTab" class="tab">
 				<ul class="tab">
-					<li><a href="#account" class="current">Account</a></li>
+					<li><a href="#account" class="current">${spaces.msfam.account}</a></li>
 					<!-- <li><a href="#profile">Profile</a></li> -->
 				</ul>
 				<div id="mainTabAccount">
@@ -68,25 +66,25 @@
 		</div>
 	</div>
 	<div id="changePasswordPopup" class="popup">
-		<div class="panelHeader">Change Password</div>
-		<div clasS="infoLabel">Please enter your current password and the new password to set.</div>
+		<div class="panelHeader">${spaces.msfam.changepassword}</div>
+		<div class="infoLabel">${spaces.msfam.changepassword.info}</div>
 		<form name="changePasswordForm" method="post">
 		<input type="hidden" name="action" value="change-password">
 		<table>
 			<tbody>
 				<tr>
 					<td>
-						<div class="formLabel">Old password*</div>
+						<div class="formLabel">${spaces.msfam.changepassword.old}*</div>
 						<input type="password" id="oldPwdInput" name="oldPwd">
 					</td>
 				</tr>
 				<tr>
 					<td>
-						<div class="formLabel">New password*</div>
+						<div class="formLabel">${spaces.msfam.changepassword.new}*</div>
 						<input type="password" id="newPwdInput" name="newPwd">
 					</td>
 					<td>
-						<div class="formLabel">New password (repeat)*</div>
+						<div class="formLabel">${spaces.msfam.changepassword.newrepeat}*</div>
 						<input type="password" id="newPwdRepeatInput" name="newPwdRepeat">
 					</td>
 				</tr>
@@ -97,6 +95,12 @@
 			<button type="button" id="changePasswordCancelButton">${spaces.msfam.cancel}</button>
 			<button type="button" id="changePasswordSubmitButton">${spaces.msfam.save}</button>
 		</div>	
+	</div>
+	<div id="invalidPasswordInputPopup" class="popup">
+		<div class="warnLabel">${spaces.msfam.warn.invalidpwdinput}</div>
+		<div class="buttonRow">
+			<button type="button">${spaces.msfam.close}</button>
+		</div>
 	</div>
 </body>
 </html>
